@@ -16,51 +16,48 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in on mount
-    const token = localStorage.getItem('token');
-    if (token) {
-      // Validate token with backend
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      checkAuth();
-    } else {
-      setLoading(false);
-    }
+    // Check if user is authenticated on mount
+    checkAuth();
   }, []);
 
   const checkAuth = async () => {
     try {
-      const response = await axios.get('/api/auth/me');
-      setUser(response.data);
+      const response = await axios.get('/me');
+      setUser(response.data.user);
     } catch (error) {
-      localStorage.removeItem('token');
-      delete axios.defaults.headers.common['Authorization'];
+      setUser(null);
     } finally {
       setLoading(false);
     }
   };
 
   const login = async (email, password) => {
-    const response = await axios.post('/api/auth/login', { email, password });
-    const { token, user: userData } = response.data;
-    localStorage.setItem('token', token);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    setUser(userData);
-    return userData;
+    try {
+      const response = await axios.post('/login', { email, password });
+      setUser(response.data.user);
+      return response.data.user;
+    } catch (error) {
+      throw new Error('Login failed');
+    }
   };
 
-  const register = async (name, email, password) => {
-    const response = await axios.post('/api/auth/register', { name, email, password });
-    const { token, user: userData } = response.data;
-    localStorage.setItem('token', token);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    setUser(userData);
-    return userData;
+  const register = async (username, email, password) => {
+    try {
+      const response = await axios.post('/register', { username, email, password });
+      setUser(response.data.user);
+      return response.data.user;
+    } catch (error) {
+      throw new Error('Registration failed');
+    }
   };
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    delete axios.defaults.headers.common['Authorization'];
-    setUser(null);
+  const logout = async () => {
+    try {
+      await axios.get('/logout');
+      setUser(null);
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   };
 
   const value = {

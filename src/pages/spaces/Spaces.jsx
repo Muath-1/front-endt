@@ -16,7 +16,7 @@ export default function Spaces() {
 
   const fetchSpaces = async () => {
     try {
-      const response = await axios.get('/api/spaces');
+      const response = await axios.get('/spaces');
       setSpaces(response.data);
     } catch (err) {
       setError('Failed to fetch spaces');
@@ -27,7 +27,7 @@ export default function Spaces() {
 
   const handleCreateSpace = async (spaceData) => {
     try {
-      const response = await axios.post('/api/spaces', spaceData);
+      const response = await axios.post('/spaces', spaceData);
       setSpaces([...spaces, response.data]);
       setIsCreateModalOpen(false);
     } catch (err) {

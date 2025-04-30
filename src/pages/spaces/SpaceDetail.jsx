@@ -22,9 +22,9 @@ export default function SpaceDetail() {
   const fetchSpaceData = async () => {
     try {
       const [spaceRes, meetingsRes, membersRes] = await Promise.all([
-        axios.get(`/api/spaces/${spaceId}`),
-        axios.get(`/api/spaces/${spaceId}/meetings`),
-        axios.get(`/api/spaces/${spaceId}/members`),
+        axios.get(`/spaces/${spaceId}`),
+        axios.get(`/spaces/${spaceId}/meetings`),
+        axios.get(`/spaces/${spaceId}/members`),
       ]);
       setSpace(spaceRes.data);
       setMeetings(meetingsRes.data);
@@ -38,7 +38,7 @@ export default function SpaceDetail() {
 
   const handleCreateMeeting = async (meetingData) => {
     try {
-      const response = await axios.post(`/api/spaces/${spaceId}/meetings`, meetingData);
+      const response = await axios.post(`/spaces/${spaceId}/meetings`, meetingData);
       setMeetings([...meetings, response.data]);
       setIsCreateMeetingModalOpen(false);
     } catch (err) {
@@ -48,7 +48,7 @@ export default function SpaceDetail() {
 
   const handleInviteMembers = async (emails) => {
     try {
-      const response = await axios.post(`/api/spaces/${spaceId}/members/invite`, { emails });
+      const response = await axios.post(`/spaces/${spaceId}/members/invite`, { emails });
       setMembers([...members, ...response.data]);
       setIsInviteMembersModalOpen(false);
     } catch (err) {

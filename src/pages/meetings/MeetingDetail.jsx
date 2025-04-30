@@ -15,7 +15,7 @@ export default function MeetingDetail() {
 
   const fetchMeetingData = async () => {
     try {
-      const response = await axios.get(`/api/spaces/${spaceId}/meetings/${meetingId}`);
+      const response = await axios.get(`/spaces/${spaceId}/meetings/${meetingId}`);
       setMeeting(response.data);
     } catch (err) {
       setError('Failed to fetch meeting data');
@@ -26,7 +26,7 @@ export default function MeetingDetail() {
 
   const handleUpdateMeeting = async (updatedMeeting) => {
     try {
-      const response = await axios.put(`/api/spaces/${spaceId}/meetings/${meetingId}`, updatedMeeting);
+      const response = await axios.put(`/spaces/${spaceId}/meetings/${meetingId}`, updatedMeeting);
       setMeeting(response.data);
     } catch (err) {
       setError('Failed to update meeting');

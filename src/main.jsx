@@ -4,8 +4,10 @@ import App from './App'
 import './index.css'
 import axios from 'axios'
 
-// Set base URL for API requests
-axios.defaults.baseURL = 'http://localhost:3000' // Update this to match your backend API URL
+// Set base URL for API requests to match backend
+axios.defaults.baseURL = 'http://localhost:5000'
+// Enable credentials for session cookies
+axios.defaults.withCredentials = true
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

@@ -10,7 +10,7 @@ export default function CreateSpaceModal({ isOpen, onClose, onSubmit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await onSubmit({ name, description });
+    await onSubmit({ space_name, description });
     setLoading(false);
     setName('');
     setDescription('');
