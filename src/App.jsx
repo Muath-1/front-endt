@@ -7,15 +7,19 @@ import Spaces from './pages/spaces/Spaces';
 import SpaceDetail from './pages/spaces/SpaceDetail';
 import MeetingDetail from './pages/meetings/MeetingDetail';
 import Navbar from './components/common/Navbar';
+import AcceptInvitation from './pages/auth/AcceptInvitation';
+
 
 function App() {
   return (
     <AuthProvider>
       <Router>
         <div className="min-h-screen bg-gray-50">
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+        <Routes> {/* [cite: 281] */}
+            <Route path="/login" element={<Login />} /> {/* [cite: 281] */}
+            <Route path="/register" element={<Register />} /> {/* [cite: 281] */}
+            {/* Add the new route */}
+            <Route path="spaces/:spaceId/members/accept/:token" element={<AcceptInvitation />} />
             <Route
               path="/"
               element={
@@ -27,6 +31,7 @@ function App() {
                 </PrivateRoute>
               }
             />
+            
             <Route
               path="/spaces/:spaceId"
               element={

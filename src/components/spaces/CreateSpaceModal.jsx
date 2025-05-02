@@ -3,17 +3,15 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function CreateSpaceModal({ isOpen, onClose, onSubmit }) {
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
+  const [space_name, setSpaceName] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await onSubmit({ space_name, description });
+    await onSubmit({ space_name });
     setLoading(false);
-    setName('');
-    setDescription('');
+    setSpaceName('');
   };
 
   return (
@@ -60,32 +58,18 @@ export default function CreateSpaceModal({ isOpen, onClose, onSubmit }) {
                     </Dialog.Title>
                     <form onSubmit={handleSubmit} className="mt-6 space-y-4">
                       <div>
-                        <label htmlFor="name" className="block text-sm font-medium text-gray-700">
-                          Name
+                        <label htmlFor="space_name" className="block text-sm font-medium text-gray-700">
+                          Space Name
                         </label>
                         <input
                           type="text"
-                          name="name"
-                          id="name"
+                          name="space_name"
+                          id="space_name"
                           required
                           className="mt-1 input-field"
                           placeholder="Enter space name"
-                          value={name}
-                          onChange={(e) => setName(e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                          Description
-                        </label>
-                        <textarea
-                          name="description"
-                          id="description"
-                          rows={3}
-                          className="mt-1 input-field"
-                          placeholder="Enter space description"
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value)}
+                          value={space_name}
+                          onChange={(e) => setSpaceName(e.target.value)}
                         />
                       </div>
                       <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">

@@ -3,16 +3,15 @@ import { Dialog, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function InviteMembersModal({ isOpen, onClose, onSubmit }) {
-  const [emails, setEmails] = useState('');
+  const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const emailList = emails.split(',').map(email => email.trim());
-    await onSubmit(emailList);
+    await onSubmit(email);
     setLoading(false);
-    setEmails('');
+    setEmail('');
   };
 
   return (
@@ -59,21 +58,21 @@ export default function InviteMembersModal({ isOpen, onClose, onSubmit }) {
                     </Dialog.Title>
                     <form onSubmit={handleSubmit} className="mt-6">
                       <div>
-                        <label htmlFor="emails" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                           Email addresses
                         </label>
                         <p className="mt-1 text-sm text-gray-500">
                           Enter email addresses separated by commas
                         </p>
                         <textarea
-                          name="emails"
-                          id="emails"
+                          name="email"
+                          id="email"
                           rows={4}
                           required
                           className="mt-2 input-field"
                           placeholder="john@example.com, jane@example.com"
-                          value={emails}
-                          onChange={(e) => setEmails(e.target.value)}
+                          value={email}
+                          onChange={(e) => setEmail(e.target.value)}
                         />
                       </div>
                       <div className="mt-5 sm:mt-4 sm:flex sm:flex-row-reverse">

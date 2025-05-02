@@ -4,17 +4,15 @@ import { XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function CreateMeetingModal({ isOpen, onClose, onSubmit }) {
   const [title, setTitle] = useState('');
-  const [description, setDescription] = useState('');
-  const [scheduledAt, setScheduledAt] = useState('');
+  const [scheduled_time, setScheduledAt] = useState('');
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    await onSubmit({ title, description, scheduledAt });
+    await onSubmit({ title, scheduled_time });
     setLoading(false);
     setTitle('');
-    setDescription('');
     setScheduledAt('');
   };
 
@@ -76,31 +74,18 @@ export default function CreateMeetingModal({ isOpen, onClose, onSubmit }) {
                           onChange={(e) => setTitle(e.target.value)}
                         />
                       </div>
+
                       <div>
-                        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
-                          Description
-                        </label>
-                        <textarea
-                          name="description"
-                          id="description"
-                          rows={3}
-                          className="mt-1 input-field"
-                          placeholder="Enter meeting description"
-                          value={description}
-                          onChange={(e) => setDescription(e.target.value)}
-                        />
-                      </div>
-                      <div>
-                        <label htmlFor="scheduledAt" className="block text-sm font-medium text-gray-700">
+                        <label htmlFor="scheduled_time" className="block text-sm font-medium text-gray-700">
                           Date and Time
                         </label>
                         <input
                           type="datetime-local"
-                          name="scheduledAt"
-                          id="scheduledAt"
+                          name="scheduled_time"
+                          id="scheduled_time"
                           required
                           className="mt-1 input-field"
-                          value={scheduledAt}
+                          value={scheduled_time}
                           onChange={(e) => setScheduledAt(e.target.value)}
                         />
                       </div>

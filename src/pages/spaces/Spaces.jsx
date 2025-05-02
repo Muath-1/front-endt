@@ -17,6 +17,7 @@ export default function Spaces() {
   const fetchSpaces = async () => {
     try {
       const response = await axios.get('/spaces');
+      console.log('Spaces response:', response.data);
       setSpaces(response.data);
     } catch (err) {
       setError('Failed to fetch spaces');
@@ -66,17 +67,17 @@ export default function Spaces() {
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {spaces.map((space) => (
             <Link
-              key={space.id}
-              to={`/spaces/${space.id}`}
+              key={space.space_id}
+              to={`/spaces/${space.space_id}`}
               className="block hover:shadow-md transition-shadow"
             >
               <div className="card hover:border-primary-500 border-2 border-transparent">
                 <h2 className="text-lg font-medium text-gray-900 mb-2">
-                  {space.name}
+                  {space.space_name}
                 </h2>
-                <div className="text-sm text-gray-500">
+                {/* <div className="text-sm text-gray-500">
                   {space.memberCount} members • {space.meetingCount} meetings
-                </div>
+                </div> */}
               </div>
             </Link>
           ))}

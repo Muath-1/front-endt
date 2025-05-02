@@ -12,6 +12,7 @@ export default function SpaceDetail() {
   const [members, setMembers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState(''); // Added success state
   const [isCreateMeetingModalOpen, setIsCreateMeetingModalOpen] = useState(false);
   const [isInviteMembersModalOpen, setIsInviteMembersModalOpen] = useState(false);
 
@@ -46,13 +47,15 @@ export default function SpaceDetail() {
     }
   };
 
-  const handleInviteMembers = async (emails) => {
+  const handleInviteMembers = async (email) => {
     try {
-      const response = await axios.post(`/spaces/${spaceId}/members/invite`, { emails });
-      setMembers([...members, ...response.data]);
+      const response = await axios.post(`/spaces/${spaceId}/members/invite`, { email });
       setIsInviteMembersModalOpen(false);
+      setSuccess('Invitations sent successfully'); // Set success message
+      setError(''); // Clear any previous error
     } catch (err) {
       setError('Failed to invite members');
+      setSuccess(''); // Clear any previous success
     }
   };
 
@@ -96,6 +99,11 @@ export default function SpaceDetail() {
             </div>
           </div>
 
+          {success && (
+            <div className="rounded-md bg-green-50 p-4 mb-6">
+              <div className="text-sm text-green-700">{success}</div>
+            </div>
+          )}
           {error && (
             <div className="rounded-md bg-red-50 p-4 mb-6">
               <div className="text-sm text-red-700">{error}</div>
@@ -112,13 +120,13 @@ export default function SpaceDetail() {
                   ) : (
                     meetings.map((meeting) => (
                       <Link
-                        key={meeting.id}
-                        to={`/spaces/${spaceId}/meetings/${meeting.id}`}
+                        key={meeting.meeting_id}
+                        to={`/spaces/${spaceId}/meetings/${meeting.meeting_id}`}
                         className="block hover:shadow-md transition-shadow"
                       >
                         <div className="card hover:border-primary-500 border-2 border-transparent">
                           <h3 className="text-lg font-medium text-gray-900 mb-2">
-                            {meeting.title}
+                            {meeting.meeting_title}
                           </h3>
                           <div className="text-sm text-gray-500">
                             {new Date(meeting.scheduledAt).toLocaleString()}
@@ -136,13 +144,13 @@ export default function SpaceDetail() {
                 <h2 className="text-lg font-medium text-gray-900 mb-4">Members</h2>
                 <div className="space-y-4">
                   {members.map((member) => (
-                    <div key={member.id} className="flex items-center space-x-3">
+                    <div key={member.member_id} className="flex items-center space-x-3">
                       <div className="h-8 w-8 rounded-full bg-primary-500 flex items-center justify-center text-white">
-                        {member.name.charAt(0)}
+                        {member.member_name.charAt(0)}
                       </div>
                       <div>
                         <div className="text-sm font-medium text-gray-900">
-                          {member.name}
+                          {member.member_name}
                         </div>
                         <div className="text-sm text-gray-500">{member.email}</div>
                       </div>
